@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Le Colibri -- Food Gallery</title>
+<style type="text/css">
+    #scroller {
+        position: relative;
+
+    }
+    #scroller .innerScrollArea {
+        overflow: hidden;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+    }
+    #scroller ul {
+        padding: 0;
+        margin: 0;
+        position: relative;
+    }
+    #scroller li {
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+        position: absolute;
+    }
+</style>
+</head>
+<link rel="stylesheet" href="food.css">
+<body >
+<div class="navigation-bar">
+            <ul>
+                <li><a href="homepage.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="#">Order Online</a></li>
+                <li><a href="#">Reserve Your Table</a></li>
+                <li><a href="#">Food Gallery</a></li>
+                <li><a href="catered-services.html">Catering Inquiry</a></li>
+                <li><a href="feedback.html">Feedback</a></li>
+                <li><a href="our-story.html">Our Story</a></li>
+                <li><a href="staff-portal.html">Staff Portal</a></li>
+            </ul>
+        </div>
+<div id="scroller" style="width: 1000px; height: 400px; margin: 0 auto;background: black;">
+    <div class="innerScrollArea">
+        <ul>
+            <!-- Define photos here -->
+            <li><img src="f2.jpg" width="600" height="400" /></li>
+            <li><img src="f4.jpg" width="600" height="400" /></li>
+            <li><img src="f5.jpg" width="600" height="400" /></li>
+            <li><img src="f6.jpg" width="600" height="400" /></li>
+            <li><img src="f7.jpg" width="600" height="400" /></li>
+        </ul>
+    </div>
+</div>
+ <div class="footer">
+            <div class="footer-order">
+             <button type="submit">Order Now!</button>
+            </div>
+            <div class="footer-address">
+             <p>3000, Oscarp Avenue<br>Westview, NJ</p>
+            </div>
+            <div class="footer-contact">
+             <a href="mailto:abc@gmail.com">abc@gmail.com</a><br>
+             <p>(Phone number)</p>
+            </div>
+            <div class="footer-timing">
+             <p><b>Hours</b>
+                 <br>Mon: 8am —10pm<br>
+                 Tue: 8am —1pm<br>
+                 Wed: 8am —10pm<br>
+                 Thur: 8am —10pm <br>
+                 Fri: 8am —10pm<br>
+                 Sat: 12pm —10pm<br>
+                 Sun: 12pm —10pm</p>
+            </div>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        var scroller = $('#scroller div.innerScrollArea');
+        var scrollerContent = scroller.children('ul');
+        scrollerContent.children().clone().appendTo(scrollerContent);
+        var curX = 0;
+        scrollerContent.children().each(function(){
+            var $this = $(this);
+            $this.css('left', curX);
+            curX += $this.outerWidth(true);
+        });
+        var fullW = curX / 2;
+        var viewportW = scroller.width();
+
+        // Scrolling speed management
+        var controller = {curSpeed:0, fullSpeed:2};
+        var $controller = $(controller);
+        var tweenToNewSpeed = function(newSpeed, duration)
+        {
+            if (duration === undefined)
+                duration = 600;
+            $controller.stop(true).animate({curSpeed:newSpeed}, duration);
+        };
+
+        // Pause on hover
+        scroller.hover(function(){
+            tweenToNewSpeed(0);
+        }, function(){
+            tweenToNewSpeed(controller.fullSpeed);
+        });
+
+        // Scrolling management; start the automatical scrolling
+        var doScroll = function()
+        {
+            var curX = scroller.scrollLeft();
+            var newX = curX + controller.curSpeed;
+            if (newX > fullW*2 - viewportW)
+                newX -= fullW;
+            scroller.scrollLeft(newX);
+        };
+        setInterval(doScroll, 20);
+        tweenToNewSpeed(controller.fullSpeed);
+    });
+</script>
+</body>
+</html>
